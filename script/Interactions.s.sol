@@ -10,18 +10,18 @@ contract MintBasicNft is Script {
         "ipfs://bafybeig37ioir76s7mg5oobetncojcm3c3hxasyd4rvid4jqhy4gkaheg4/?filename=0-PUG.json";
 
     function run() external {
-        address mostRecentlyDeployed =0x44cBE25eF4b6B6Eb363D93C7038D4ca8af9fe1b2;
+        address mostRecentlyDeployed = 0x44cBE25eF4b6B6Eb363D93C7038D4ca8af9fe1b2;
         //address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment("BasicNft", block.chainid);
 
         // IMPORTANT:
-        
+
         // DevOpsTools.get_most_recent_deployment("BasicNft", block.chainid);
         // this is to fetch the most recently deployed contract address
         // but since we are using --ffi which is disabled by default
         // we have to enable it in foundry.toml and also add the path in the Makefile
 
-        //The get_most_recent_deployment function works by reading files inside your 
-        //project's ./broadcast directory to find the address of the last deployment. 
+        //The get_most_recent_deployment function works by reading files inside your
+        //project's ./broadcast directory to find the address of the last deployment.
         //For security, the Foundry VM blocks scripts from reading the file system by default.
         //So, your script is failing before it even gets to the mintNftOnContract function
         // because it's being denied permission to read the address.
