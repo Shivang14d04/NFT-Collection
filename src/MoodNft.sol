@@ -21,8 +21,8 @@ contract MoodNft is ERC721 {
 
     constructor(string memory sadSvgImageUri, string memory happySvgImageUri) ERC721("MOOD NFT", "MN") {
         s_tokenCounter = 0;
-        s_happySvgImageUri = sadSvgImageUri;
-        s_sadSvgImageUri = happySvgImageUri;
+        s_happySvgImageUri = happySvgImageUri;
+        s_sadSvgImageUri = sadSvgImageUri;
     }
 
     function mintNft() public {
@@ -33,9 +33,10 @@ contract MoodNft is ERC721 {
 
     function flipMood(uint256 tokenId) public {
         // we only want the owner of the nft to be able to flip the mood
-        if (!_isApprovedOrOwner(msg.sender, tokenId)) {
+        if (!_isAuthorized(ownerOf(tokenId), msg.sender, tokenId)) {
             revert MoodNft__CantFlipMoodIfNotOwner();
         }
+
         if (s_tokenIdToMood[tokenId] == Mood.HAPPY) {
             s_tokenIdToMood[tokenId] = Mood.SAD;
         } else {
