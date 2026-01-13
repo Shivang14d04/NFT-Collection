@@ -1,39 +1,110 @@
 # 🖼️ NFT Collection – Basic & Advanced Implementations
 
-This repository demonstrates two approaches to building Non-Fungible Tokens (NFTs) using Solidity and modern Web3 tooling. The project includes a **basic IPFS-based NFT** and an **advanced on-chain dynamic NFT** that changes based on predefined conditions.
+Two ERC-721 implementations built with Foundry:
 
-By the end of this project, you will be able to mint NFTs, store metadata properly, interact with them via MetaMask, and view them on marketplaces like OpenSea.
+- Basic, IPFS-hosted metadata/image NFT (`BasicNft`)
+- Fully on-chain, dynamic SVG NFT that flips mood (`MoodNft`)
 
----
-
-## 🚀 Features
-
-### 1️⃣ Basic NFT (IPFS-based)
-- Images and metadata stored on IPFS
-- ERC-721 compliant smart contract
-- Token URI pointing to decentralized storage
-- Mintable via smart contract
-- Viewable in MetaMask and NFT marketplaces
-
-### 2️⃣ Advanced NFT (On-chain & Dynamic)
-- SVG art stored fully on-chain
-- Metadata generated dynamically
-- NFT changes based on defined logic (e.g., mood: happy/sad)
-- No external storage dependency
-- Fully decentralized
+This repo includes deployment scripts, integration/unit tests, and a Makefile for common workflows.
 
 ---
 
-## 🛠️ Tech Stack
+## 📦 Requirements
 
-- **Solidity** – Smart contract development
-- **Foundry** – Development, testing, and deployment
-- **IPFS** – Decentralized storage
-- **OpenZeppelin** – ERC-721 standards
-- **Ethereum** – Blockchain network
-- **MetaMask** – Wallet integration
+- Foundry (forge/cast/anvil)
+  - Install: https://book.getfoundry.sh/getting-started/installation
+  - Update: `foundryup`
+- An Ethereum RPC URL (for testnet/mainnet tasks)
+- A funded private key for live networks (Sepolia recommended)
 
 ---
 
 ## 📂 Project Structure
+
+```
+foundry.toml
+Makefile
+script/
+  DeployBasicNft.s.sol
+  DeployMoodNft.s.sol
+  Interactions.s.sol
+src/
+  BasicNFT.sol
+  MoodNft.sol
+test/
+  Integrations/
+  Unit/
+img/
+  happy.svg
+  sad.svg
+  pug.png
+```
+
+---
+
+## 🚀 Quickstart
+
+Install dependencies, build, and run tests:
+
+```bash
+forge install
+forge build
+forge test -vvv
+```
+
+Or with the `Makefile` helpers:
+
+```bash
+make install
+make build
+make test
+```
+
+Start a local chain in a separate terminal:
+
+```bash
+make anvil
+```
+
+---
+
+## 🧩 Contracts Overview
+
+- `BasicNft` (src/BasicNFT.sol)
+  - Minimal ERC-721 using OpenZeppelin
+  - Stores per-token `tokenURI` strings (e.g., IPFS JSON)
+  - Deployment script: `script/DeployBasicNft.s.sol`
+
+- `MoodNft` (src/MoodNft.sol)
+  - Fully on-chain metadata + SVG image
+  - Moods: HAPPY ↔ SAD via `flipMood(tokenId)`
+  - Deployment script: `script/DeployMoodNft.s.sol` reads `img/happy.svg` and `img/sad.svg`
+
+---
+
+## 🧪 Testing
+
+```bash
+forge test
+```
+
+Verbose:
+
+```bash
+forge test -vvv
+```
+
+
+> Note: `script/Interactions.s.sol` demonstrates minting for `BasicNft` and currently contains a hardcoded deployed address for convenience. Update it with your deployed address or use `cast` as shown above.
+
+---
+
+## 🖼️ Assets
+
+- `img/happy.svg` and `img/sad.svg` are used by `DeployMoodNft.s.sol` to build on-chain image URIs.
+- The repo also includes `img/pug.png` and an example IPFS JSON URI used for `BasicNft`.
+
+---
+
+
 
